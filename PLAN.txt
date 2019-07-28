@@ -1,0 +1,105 @@
+Liam Pulsifer -- lp139 -- Game Plan
+
+Breakout Variants:
+    I thought Warlords (multiplayer, protect your own castle) was an interesting twist on the classic Breakout game.
+    From a gamer perspective, it adds a very different dimension to hitting the ball because you have to pay attention
+    not only to where you want the ball to go but also to what angles it gives your opponent. From a design perspective,
+    it adds some layers of logic to how you want the paddle to work (should it be able to work "backwards" i.e. after
+    bouncing off of your castle?)
+
+    With this in mind I'd like to design a Breakout game with a single-player and a two-player mode - first, the simple
+    traditional breakout game with one paddle, one ball (most of the time), and the objective to break all of the blocks
+    in increasingly more difficult configurations without letting the ball by your paddle, and second, a two-player
+    version where two paddles each guard a fortress of blocks, with the goal to destroy your opponent's fortress before
+    s/he destroys yours.
+
+Single-Player Levels:
+    Level 1: This will be a basic square array of blocks, with one line of gaps between each line of blocks, like so.
+
+        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+
+        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+
+        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+
+        ... etc
+
+    Level 2 - "Blockade": There will be a line of impenetrable blocks at the bottom of the block array, with a small gap
+    through which the ball can pass to hit the other blocks behind it.
+
+                            [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                            [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                            [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                            [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+
+    Impenetrable-->  [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]      GAP     ^Wall
+
+    Level 3 - "Moving Blocks": In this level, the blocks will move back and forth across the screen, increasing the
+    difficulty of hitting them and reacting to the ball bouncing off of them. The configuration will be like the first
+    level but with spaces between them to allow the blocks to move back and forth. The blocks will bounce off of one
+    another when they hit each other.
+
+    (If Feasible) Level 4 - "Teleporting Blocks": The blocks in this level will be arranged in a checkerboard style pattern, with a
+    block, then a gap, then a block, etc. Some blocks in this level will teleport to a random open space in the game screen
+    upon the first hit, then break on the second. This will be difficult to anticipate, especially if they teleport
+    near to the paddle.
+    
+    (If Feasible) Level 5 - "Tower": The blocks will be arranged in concentric "rings" (really more like squares due to the shape of 
+    the blocks). In the middle will be a group of explosive blocks, which if hit will detonate and destroy all of the
+    blocks in a chain reaction. After beating this level, the player will be taken to the "You won!" game screen.
+
+    Multiplayer mode will be configured as follows - the blocks used will be random combinations of all the block types
+
+               -----------------    Wall     --------------------------------
+
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+
+                    Paddle moves along this line to protect the blocks
+
+
+
+
+
+                    Paddle2 moves along this line to protect the blocks
+
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+                        [BLOCK][BLOCK][BLOCK][BLOCK][BLOCK][BLOCK]
+
+               ---------------     Wall   ---------------------------------------
+
+Block Types:
+
+    Impenetrable blocks: Won't ever break, no matter how many times hit
+    Moving blocks: Will move back and forth across the screen, changing direction when they hit the wall or another block
+    Teleporting blocks: When hit the first time teleport to a random open (i.e. no block, no paddle) location on the
+      screen. On the second hit, they'll break.
+    Explosive blocks: Break all blocks directly adjacent to them when hit.
+    Multi-hit blocks: Will "crack" when hit but won't break until a certain number >1 of hits.
+
+Powerups: Will drop from random blocks when those blocks are hit.
+
+    Extra Life: Adds one to number of lives
+    Wide Paddle: Doubles paddle width
+    Slow Ball: Slows the ball down for a certain time period to make it easier to anticipate
+    Explosive Ball: Makes the ball into a kind of missile which explodes when the player presses the space bar and
+        destroys all nearby blocks. The ball then returns to the paddle and can be reshot
+    Lose Life: A negative powerup to keep the player on his/her toes.
+
+
+Extra Addition:
+
+    The multiplayer mode will be the significant "extra" part of my breakout game. It will significantly increase the
+    complexity and repeatability of gameplay by allowing for competition with another player. It will also be a
+    significant addition in terms of code because I'll need to account for the randomization of block types in this format
+    and the logic of how the ball should not bounce off of a paddle when it's coming from behind that paddle. I also want
+    to implement a feature where the player can use the explosive ball and block powerups to attack the other player's
+    paddle, taking away their lives or breaking off pieces of their paddle until it's tiny and useless.
+
+
+
+
